@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RehersalPlaner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <h1 class="logo">RehersalPlaner</h1>
+    <div class="header-actions">
+      <button id="profileBtn" class="btn btn-secondary hidden">Profile</button>
+      <button id="logoutBtn" class="btn btn-secondary hidden">Logout</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <section id="setupSection" class="auth-section hidden">
+      <div class="auth-card">
+        <h2>Setup Admin Account</h2>
+        <p class="auth-subtitle">Create your admin account to get started</p>
+        <form id="setupForm">
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="setupUsername" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="setupPassword" required>
+            <small class="password-hint">Min 12 chars, with uppercase, lowercase, number & special char (!@#$%^&*)</small>
+          </div>
+          <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" id="setupPasswordConfirm" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Create Admin</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="loginSection" class="auth-section hidden">
+      <div class="auth-card">
+        <h2>Login</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="loginUsername" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="loginPassword" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Login</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="rehearsalsSection" class="hidden">
+      <div class="section-header">
+        <h2>Rehearsals</h2>
+        <div class="section-actions">
+          <button id="manageUsersBtn" class="btn btn-secondary hidden">Manage Users</button>
+          <button id="createRehearsalBtn" class="btn btn-primary hidden">New Rehearsal</button>
+        </div>
+      </div>
+      <div id="rehearsalsList" class="rehearsals-list"></div>
+    </section>
+
+    <section id="usersSection" class="hidden">
+      <div class="section-header">
+        <h2>User Management</h2>
+        <button id="backToRehearsalsBtn" class="btn btn-secondary">Back to Rehearsals</button>
+      </div>
+      <div class="users-header">
+        <button id="createUserBtn" class="btn btn-primary hidden">Create User</button>
+      </div>
+      <div id="usersList" class="users-list"></div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close">&times;</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
