@@ -29,9 +29,7 @@ jobs:
           username: deploy
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           debug: true
-          envs: PATH
           script: |
-            export PATH=$PATH:/home/knuggel/.nvm/versions/node/v20.20.0/bin
             mkdir -p /var/www/bm.kcju.eu/app/releases/${{ github.ref_name }}
 
       - name: Deploy files
@@ -50,11 +48,9 @@ jobs:
           host: ${{ secrets.HOST }}
           username: deploy
           key: ${{ secrets.DEPLOY_SSH_KEY }}
-          envs: PATH
           script: |
-            export PATH=$PATH:/home/knuggel/.nvm/versions/node/v20.20.0/bin
             cd /var/www/bm.kcju.eu/app/releases/${{ github.ref_name }}
-            npm ci --production
+            /home/knuggel/.nvm/versions/node/v20.20.0/bin/npm ci --production
 
       - name: Update symlink
         uses: appleboy/ssh-action@v0.1.0
@@ -73,7 +69,5 @@ jobs:
           host: ${{ secrets.HOST }}
           username: deploy
           key: ${{ secrets.DEPLOY_SSH_KEY }}
-          envs: PATH
           script: |
-            export PATH=$PATH:/home/knuggel/.nvm/versions/node/v20.20.0/bin
             pm2 restart band-manager || pm2 start server.js --name band-manager
