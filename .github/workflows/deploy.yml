@@ -50,7 +50,7 @@ jobs:
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
             cd /var/www/bm.kcju.eu/app/releases/${{ github.ref_name }}
-            /usr/local/bin/npm ci --production
+            /opt/nodejs/npm ci --production
 
       - name: Update symlink
         uses: appleboy/ssh-action@v0.1.0
@@ -70,4 +70,4 @@ jobs:
           username: deploy
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
-            /usr/local/bin/pm2 restart band-manager || /usr/local/bin/pm2 start server.js --name band-manager
+            /opt/nodejs/pm2 restart band-manager || /opt/nodejs/pm2 start server.js --name band-manager
