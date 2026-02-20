@@ -48,9 +48,11 @@ jobs:
           host: ${{ secrets.HOST }}
           username: deploy
           key: ${{ secrets.DEPLOY_SSH_KEY }}
+          envs: PATH
           script: |
+            export PATH=/opt/nodejs:$PATH
             cd /var/www/bm.kcju.eu/app/releases/${{ github.ref_name }}
-            /opt/nodejs/npm ci --production
+            npm ci --production
 
       - name: Update symlink
         uses: appleboy/ssh-action@v0.1.0
@@ -69,5 +71,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: deploy
           key: ${{ secrets.DEPLOY_SSH_KEY }}
+          envs: PATH
           script: |
-            /opt/nodejs/pm2 restart band-manager || /opt/nodejs/pm2 start server.js --name band-manager
+            export PATH=/opt/nodejs:$PATH
+            pm2 restart band-manager || pm2 start server.js --name band-manager
