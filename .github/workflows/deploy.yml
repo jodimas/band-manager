@@ -22,56 +22,22 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Create release directory
-        uses: appleboy/ssh-action@v0.1.0
-        with:
-          host: ${{ secrets.HOST }}
-          username: deploy
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          debug: true
-          script: |
-            mkdir -p /var/www/bm.kcju.eu/app/releases/${{ github.ref_name }}
-
       - name: Deploy files
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.HOST }}
           username: deploy
           key: ${{ secrets.DEPLOY_SSH_KEY }}
-          source: "public/,server.js,data.json,package.json"
+          source: "public/,server.js,data.json,package.json,deploy-agent.js"
           target: "/var/www/bm.kcju.eu/app/releases/${{ github.ref_name }}"
           strip_components: 0
 
-      - name: Install & Build on server
+      - name: Run deployment agent
         uses: appleboy/ssh-action@v0.1.0
         with:
           host: ${{ secrets.HOST }}
           username: deploy
           key: ${{ secrets.DEPLOY_SSH_KEY }}
-          envs: PATH
           script: |
-            export PATH=/opt/nodejs/bin:$PATH
             cd /var/www/bm.kcju.eu/app/releases/${{ github.ref_name }}
-            npm ci --production
-
-      - name: Update symlink
-        uses: appleboy/ssh-action@v0.1.0
-        with:
-          host: ${{ secrets.HOST }}
-          username: deploy
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          script: |
-            cd /var/www/bm.kcju.eu/app
-            rm -f current
-            ln -s releases/${{ github.ref_name }} current
-
-      - name: Restart PM2
-        uses: appleboy/ssh-action@v0.1.0
-        with:
-          host: ${{ secrets.HOST }}
-          username: deploy
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          envs: PATH
-          script: |
-            export PATH=/opt/nodejs/bin:$PATH
-            pm2 restart band-manager || pm2 start server.js --name band-manager
+            /opt/nodejs/bin/node deploy-agent.js ${{ github.ref_name }}
