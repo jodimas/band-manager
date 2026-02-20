@@ -50,7 +50,7 @@ jobs:
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           envs: PATH
           script: |
-            export PATH=/opt/nodejs:$PATH
+            export PATH=/opt/nodejs/bin:$PATH
             cd /var/www/bm.kcju.eu/app/releases/${{ github.ref_name }}
             npm ci --production
 
@@ -73,5 +73,5 @@ jobs:
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           envs: PATH
           script: |
-            export PATH=/opt/nodejs:$PATH
+            export PATH=/opt/nodejs/bin:$PATH
             pm2 restart band-manager || pm2 start server.js --name band-manager
