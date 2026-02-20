@@ -28,6 +28,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: deploy
           key: ${{ secrets.DEPLOY_SSH_KEY }}
+          debug: true
           script: |
             mkdir -p /var/www/bm.kcju.eu/app/releases/${{ github.ref_name }}
 
