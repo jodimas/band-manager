@@ -26,7 +26,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.0
         with:
           host: ${{ secrets.HOST }}
-          username: deploy
+          username: knuggel
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           debug: true
           script: |
@@ -36,7 +36,7 @@ jobs:
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.HOST }}
-          username: deploy
+          username: knuggel
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           source: "public/,server.js,data.json,package.json"
           target: "/var/www/bm.kcju.eu/app/releases/${{ github.ref_name }}"
@@ -46,7 +46,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.0
         with:
           host: ${{ secrets.HOST }}
-          username: deploy
+          username: knuggel
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
             cd /var/www/bm.kcju.eu/app/releases/${{ github.ref_name }}
@@ -56,7 +56,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.0
         with:
           host: ${{ secrets.HOST }}
-          username: deploy
+          username: knuggel
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
             cd /var/www/bm.kcju.eu/app
@@ -67,7 +67,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.0
         with:
           host: ${{ secrets.HOST }}
-          username: deploy
+          username: knuggel
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
             /home/knuggel/.nvm/versions/node/v20.20.0/bin/pm2 restart band-manager || /home/knuggel/.nvm/versions/node/v20.20.0/bin/pm2 start server.js --name band-manager
