@@ -70,4 +70,4 @@ jobs:
           username: deploy
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
-            pm2 restart band-manager || pm2 start server.js --name band-manager
+            /home/knuggel/.nvm/versions/node/v20.20.0/bin/pm2 restart band-manager || /home/knuggel/.nvm/versions/node/v20.20.0/bin/pm2 start server.js --name band-manager
